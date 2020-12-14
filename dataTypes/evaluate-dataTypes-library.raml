@@ -1,0 +1,24 @@
+#%RAML 1.0 Library
+usage: Data models to related to the Info Object
+
+types:
+  evaluate:
+    properties:
+      data:
+        type: object
+        example:
+          strict: false
+          value:
+            _arg1:
+              - 12.99
+            _arg2:
+              - USD
+            _arg3:
+              - CAD
+        required: true
+      script:
+        example:
+          strict: false
+          value: currency
+        type: string
+        required: true

@@ -1,0 +1,45 @@
+#%RAML 1.0
+title: Tableau Analytics Extensions API
+baseUri: http://localhost:8081/
+version: 1.0.0
+mediaType: 
+- application/json
+protocols:
+- HTTP
+- HTTPS
+securitySchemes:
+  basic:
+    type: Basic Authentication
+
+uses:
+  InfoTypes: dataTypes/info-dataTypes-library.raml
+  EvaluateTypes: dataTypes/evaluate-dataTypes-library.raml
+
+securedBy:
+  - basic
+    
+/info:
+  get:
+    description: Get information about the server.
+    responses:
+      200:
+        body:
+          type: InfoTypes.info
+          examples: !include examples/info-example.raml
+/evaluate:
+  post:
+    body:
+      application/json:
+        type: EvaluateTypes.evaluate
+    responses:
+      200:
+        body:
+          application/json:
+            type: array
+            example:
+              strict: false
+              value: 
+                - 4.0
+            items:
+              type: any
+            

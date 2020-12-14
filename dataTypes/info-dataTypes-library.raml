@@ -1,0 +1,36 @@
+#%RAML 1.0 Library
+usage: Data models to related to the Info Object
+
+types:
+  info:
+    properties:
+      description?:
+        type: string
+      creation_time?:
+        type: integer
+      state_path?:
+        type: string
+      server_version?:
+        type: string
+      name?:
+        type: string
+      versions?: version
+  version:
+    properties:
+      ver?: features
+  features:
+    properties:
+      features?: feature
+  feature:
+    properties:
+      authentication?: authentication
+  authentication:
+    properties:
+      required?:
+        default: true
+        type: boolean
+      methods?: basic-auth
+  basic-auth:
+    properties:
+      basic-auth?:
+        type: object

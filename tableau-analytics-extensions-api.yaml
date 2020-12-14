@@ -1,0 +1,96 @@
+swagger: "2.0"
+host: localhost:8081
+basePath: /
+schemes:
+  - http
+  - https
+info:
+  version: 1.0.0
+  title: Tableau Analytics Extensions API
+
+securityDefinitions:
+  BasicAuth:
+    type: basic
+security:
+  - BasicAuth: []
+
+definitions:
+  basic-auth:
+    properties:
+      basic-auth:
+        type: object
+  authentication:
+    properties:
+      required:
+        type: boolean
+        default: true
+      methods:
+        $ref: "#/definitions/basic-auth"
+  feature:
+    properties:
+      authentication:
+        $ref: "#/definitions/authentication"
+  features:
+    properties:
+      features:
+        $ref: "#/definitions/feature"
+  version:
+    properties:
+      ver:
+        $ref: "#/definitions/features"
+  info:
+    properties:
+      description:
+        type: string
+      creation_time:
+        type: integer
+      state_path:
+        type: string
+      server_version:
+        type: string
+      name:
+        type: string
+      versions:
+        $ref: "#/definitions/version"
+  evaluate:
+    properties:
+      data:
+        type: object
+        example: {"_arg1":[12.99],"_arg2":["USD"],"_arg3":["CAD"]}
+      script:
+        type: string
+        example: "currency"
+    required:  
+      - data
+      - script
+paths:
+  /evaluate:
+    post:
+      summary: Executes a block of code, replacing named parameters with their provided values.
+      parameters:
+        - in: body
+          name: evaluate
+          schema:
+            $ref: '#/definitions/evaluate'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            example: [4.0]
+              
+              
+  /info:
+    get:
+      summary: Get static information about the server.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/info'
